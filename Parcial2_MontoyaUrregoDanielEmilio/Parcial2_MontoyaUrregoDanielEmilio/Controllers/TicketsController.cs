@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -67,7 +68,7 @@ namespace Parcial2_MontoyaUrregoDanielEmilio.Controllers
             return View(ticket);
         }
 
-        // GET: Tickets/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Tickets == null)
@@ -83,9 +84,7 @@ namespace Parcial2_MontoyaUrregoDanielEmilio.Controllers
             return View(ticket);
         }
 
-        // POST: Tickets/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Ticket ticket)
@@ -95,10 +94,12 @@ namespace Parcial2_MontoyaUrregoDanielEmilio.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (ticket.IsUsed != true && ModelState.IsValid)
             {
                 try
                 {
+                    ticket.UseDate = DateTime.Now;
+                    ticket.IsUsed = true;
                     _context.Update(ticket);
                     await _context.SaveChangesAsync();
                 }
@@ -118,7 +119,7 @@ namespace Parcial2_MontoyaUrregoDanielEmilio.Controllers
             return View(ticket);
         }
 
-        // GET: Tickets/Delete/5
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Tickets == null)
@@ -136,7 +137,7 @@ namespace Parcial2_MontoyaUrregoDanielEmilio.Controllers
             return View(ticket);
         }
 
-        // POST: Tickets/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
