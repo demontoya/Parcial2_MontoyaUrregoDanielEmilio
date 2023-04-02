@@ -13,7 +13,7 @@ namespace Parcial2_MontoyaUrregoDanielEmilio.DAL
 
         public async Task SeederAsync()
         {
-            await _context.Database.EnsureCreatedAsync(); // me reemplaza el comando update-database
+            await _context.Database.EnsureCreatedAsync();
             await PopulateTicketsAsync();
 
             await _context.SaveChangesAsync();
@@ -23,8 +23,13 @@ namespace Parcial2_MontoyaUrregoDanielEmilio.DAL
         {
             if (!_context.Tickets.Any())
             {
-                _context.Tickets.Add(new Ticket { UseDate = null, IsUsed = false, EntranceGate = null });
+                for(int i = 0; i<100; i++)
+                {
+                    _context.Tickets.Add(new Ticket { UseDate = null, IsUsed = false, EntranceGate = null });
+                }
             }
         }
+
+
     }
 }

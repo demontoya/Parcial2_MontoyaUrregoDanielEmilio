@@ -12,6 +12,10 @@ builder.Services.AddDbContext<DatabaseContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
+builder.Services.AddTransient<SeederDb>();
+
 var app = builder.Build();
 
 SeederData();
